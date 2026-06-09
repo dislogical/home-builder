@@ -49,12 +49,3 @@
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/go,direnv,visualstudiocode
-
-# Devenv
-.devenv*
-devenv.local.nix
-
-# mkdocs generated site
-/site/
-
-.bonk/
