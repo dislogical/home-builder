@@ -12,6 +12,7 @@ linters:
     - gomodguard
     - ireturn
     - nestif
+    - noinlineerr
     - wsl
     - wsl_v5
 
@@ -64,31 +65,6 @@ linters:
             - pkg: "github.com/pkg/errors"
               desc: Should be replaced by standard lib errors package
 
-        api:
-          list-mode: lax
-          files:
-            - "!**/pkg/executor/rpc/*.go"
-          deny:
-            - pkg: "go.bonk.build/api"
-              desc: only for use by the rpc package
-
-        no-os:
-          list-mode: lax
-          files:
-            - pkg/
-            - plugins/
-          deny:
-            - pkg: "^os$"
-              desc: usage of os is disallowed in library code
-
-        test:
-          list-mode: lax
-          files:
-            - "!$test"
-          deny:
-            - pkg: "go.bonk.build/test"
-              desc: only for use by tests
-
     exhaustive:
       # Program elements to check for exhaustiveness.
       # Default: [ switch ]
@@ -111,10 +87,6 @@ linters:
       ignored-numbers:
         - "0o600"
         - "0o750"
-      # List of file patterns to exclude from analysis.
-      # Values always ignored: `.+_test.go`.
-      ignored-files:
-        - "cmd/bonk/.+"
 
     sloglint:
       # Enforce using methods that accept a context.
@@ -152,14 +124,6 @@ linters:
       # - for constants: const <name>
       ignore-decls:
         - ok bool
-
-    wrapcheck:
-      # An array of strings that specify globs of packages to ignore.
-      ignore-package-globs:
-        - go.bonk.build/pkg/*
-        - golang.org/x/sync/errgroup
-        - go.uber.org/multierr
-        - google.golang.org/grpc/status
 
 formatters:
   # Enable specific formatter.
@@ -209,7 +173,7 @@ formatters:
 
     gofumpt:
       # Module path which contains the source code being formatted.
-      module-path: go.bonk.build
+      module-path: github.com/dislogical/home-builder
 
       # Choose whether to use the extra rules.
       extra-rules: true
@@ -219,7 +183,7 @@ formatters:
       # with the given prefixes are grouped after 3rd-party packages.
       # Default: []
       local-prefixes:
-        - go.bonk.build
+        - github.com/dislogical/home-builder
 
     golines:
       # Length of a tabulation.
