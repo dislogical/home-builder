@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"cuelang.org/go/cue"
+
+	_ "embed"
 )
 
 type Metadata struct {
@@ -20,6 +22,9 @@ type Resource struct {
 	Config cue.Value `json:"-"`
 	Impl   any       `json:"-"`
 }
+
+//go:embed schema.cue
+var resourceSchema string
 
 type ResourceStatus int
 
