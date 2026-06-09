@@ -18,6 +18,8 @@ func (m *Metadata) String() string {
 }
 
 type Resource struct {
+	Context *Context `json:"-"`
+
 	Meta    Metadata        `json:"$meta"`
 	Config  cue.Value       `json:"-"`
 	Backend ResourceBackend `json:"-"`

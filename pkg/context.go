@@ -85,7 +85,8 @@ func (ctx *Context) Load(dir string) ([]Resource, error) {
 			}
 
 			resource := Resource{
-				Config: config,
+				Context: ctx,
+				Config:  config,
 			}
 			err = config.Decode(&resource)
 			if err != nil {
