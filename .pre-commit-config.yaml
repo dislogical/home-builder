@@ -1,0 +1,59 @@
+# Copyright © 2025 Colden Cullen
+# SPDX-License-Identifier: MIT
+
+default_stages:
+  - pre-commit
+  - pre-push
+
+default_install_hook_types:
+  - commit-msg
+  - pre-commit
+  - pre-push
+
+default_language_version:
+  golang: system # It is expected that the correct version of go is installed by mise
+
+repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-vcs-permalinks
+      - id: check-toml
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: mixed-line-ending
+      - id: detect-private-key
+      # - id: no-commit-to-branch
+
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v2.12.2
+    hooks:
+      - id: golangci-lint-config-verify
+      - id: golangci-lint-full
+      - id: golangci-lint-fmt
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.25.2
+    hooks:
+      - id: zizmor
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.16.3
+    hooks:
+      - id: commitizen
+        stages:
+          - commit-msg
+          - manual
