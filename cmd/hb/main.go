@@ -35,12 +35,9 @@ func main() {
 					return fmt.Errorf("preparing resource: %w", err)
 				}
 
-				status := homebuilder.StatusUnknown
-				if statusable, ok := resource.Impl.(homebuilder.ResourceStatusQueryable); ok {
-					status, err = statusable.GetStatus()
-					if err != nil {
-						return fmt.Errorf("retrieving status for %s: %w", resource.Meta, err)
-					}
+				status, err := resource.Backend.GetStatus()
+				if err != nil {
+					return fmt.Errorf("retrieving status for %s: %w", resource.Meta, err)
 				}
 
 				log.Printf("%s: %s", resource.Meta.String(), status)

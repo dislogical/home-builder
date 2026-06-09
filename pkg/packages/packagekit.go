@@ -2,12 +2,12 @@ package packages
 
 import homebuilder "github.com/dislogical/home-builder/pkg"
 
-var _ homebuilder.ResourceStatusQueryable = (*Package)(nil)
+var _ homebuilder.ResourceBackend = (*Package)(nil)
 
 type Package struct{}
 
 func Prepare(resource *homebuilder.Resource) error {
-	resource.Impl = &Package{}
+	resource.Backend = &Package{}
 
 	return nil
 }

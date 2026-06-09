@@ -18,9 +18,9 @@ func (m *Metadata) String() string {
 }
 
 type Resource struct {
-	Meta   Metadata  `json:"$meta"`
-	Config cue.Value `json:"-"`
-	Impl   any       `json:"-"`
+	Meta    Metadata        `json:"$meta"`
+	Config  cue.Value       `json:"-"`
+	Backend ResourceBackend `json:"-"`
 }
 
 //go:embed schema.cue
@@ -51,7 +51,7 @@ func (rs ResourceStatus) String() string {
 	}
 }
 
-type ResourceStatusQueryable interface {
+type ResourceBackend interface {
 	GetStatus() (ResourceStatus, error)
 }
 
@@ -70,7 +70,7 @@ func (r *Resource) Prepare() error {
 		return err
 	}
 
-	if r.Impl == nil {
+	if r.Backend == nil {
 		return fmt.Errorf("%w: %s", ErrFactoryNooped, r.Meta)
 	}
 

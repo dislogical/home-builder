@@ -10,7 +10,7 @@ import (
 	homebuilder "github.com/dislogical/home-builder/pkg"
 )
 
-var _ homebuilder.ResourceStatusQueryable = (*Config)(nil)
+var _ homebuilder.ResourceBackend = (*Config)(nil)
 
 type Config struct {
 	FileName string `json:"$filename"`
@@ -43,7 +43,7 @@ func Prepare(resource *homebuilder.Resource) error {
 		return fmt.Errorf("decoding content: %w", err)
 	}
 
-	resource.Impl = config
+	resource.Backend = config
 
 	return nil
 }
