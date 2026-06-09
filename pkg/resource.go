@@ -13,7 +13,7 @@ type Metadata struct {
 	Type string `json:"type"`
 }
 
-func (m *Metadata) String() string {
+func (m Metadata) String() string {
 	return fmt.Sprintf("%s:%s", m.Type, m.Name)
 }
 
