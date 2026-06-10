@@ -20,6 +20,7 @@ func main() {
 		Name: "hb",
 		Commands: []*cli.Command{
 			diff,
+			test,
 		},
 		Action: func(ctx context.Context, c *cli.Command) error {
 			hbctx := homebuilder.NewContext()
