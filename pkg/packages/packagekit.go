@@ -6,7 +6,9 @@ var _ homebuilder.ResourceBackend = (*Package)(nil)
 
 type Package struct{}
 
-func Prepare(resource *homebuilder.Resource) error {
+type Factory struct{}
+
+func (f *Factory) InitBackend(resource *homebuilder.Resource) error {
 	resource.Backend = &Package{}
 
 	return nil
@@ -17,5 +19,5 @@ func (p *Package) GetStatus() (homebuilder.ResourceStatus, error) {
 }
 
 func init() {
-	homebuilder.RegisterResourceFactory("package", Prepare)
+	homebuilder.RegisterResourceFactory("package", &Factory{})
 }

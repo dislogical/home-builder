@@ -67,9 +67,9 @@ func (r *Resource) Prepare() error {
 		return fmt.Errorf("%w: %s", ErrFactoryNotFound, r.Meta)
 	}
 
-	err := factory(r)
+	err := factory.InitBackend(r)
 	if err != nil {
-		return err
+		return err //nolint:wrapcheck
 	}
 
 	if r.Backend == nil {

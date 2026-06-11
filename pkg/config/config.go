@@ -28,7 +28,9 @@ type Config struct {
 	ExistingContent string `json:"-"`
 }
 
-func Prepare(resource *homebuilder.Resource) error {
+type Factory struct{}
+
+func (f *Factory) InitBackend(resource *homebuilder.Resource) error {
 	config := &Config{}
 
 	err := resource.Config.Decode(config)
@@ -101,5 +103,5 @@ func (p *Config) GetDiff() (string, string, error) {
 }
 
 func init() {
-	homebuilder.RegisterResourceFactory("config", Prepare)
+	homebuilder.RegisterResourceFactory("config", &Factory{})
 }

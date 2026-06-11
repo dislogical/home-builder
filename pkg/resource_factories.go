@@ -2,7 +2,9 @@ package homebuilder
 
 import "errors"
 
-type ResourceFactory func(resource *Resource) error
+type ResourceFactory interface {
+	InitBackend(resource *Resource) error
+}
 
 var resourceFactories map[string]ResourceFactory = make(map[string]ResourceFactory)
 
