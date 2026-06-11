@@ -28,6 +28,9 @@ type Resource struct {
 //go:embed schema.cue
 var resourceSchema string
 
+//go:embed default_config.cue
+var DefaultConfig string
+
 type ResourceStatus int
 
 const (

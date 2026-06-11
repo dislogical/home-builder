@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -19,12 +20,17 @@ func main() {
 	cmd := &cli.Command{
 		Name: "hb",
 		Commands: []*cli.Command{
+			init_,
 			diff,
 		},
 		Action: func(ctx context.Context, c *cli.Command) error {
 			hbctx := homebuilder.NewContext()
 
 			resources, err := hbctx.Load(filepath.Join(xdg.ConfigHome, "home-builder"))
+			if errors.Is(err, homebuilder.ErrConfigNotExist) {
+				return errors.New("config directory does not exist, run 'init' to create a default config")
+			}
+
 			if err != nil {
 				return fmt.Errorf("loading config: %w", err)
 			}

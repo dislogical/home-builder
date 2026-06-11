@@ -3,11 +3,15 @@ package homebuilder
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
 	"cuelang.org/go/cue/load"
 )
+
+// ErrConfigNotExist specifies that the configuration does not exist.
+var ErrConfigNotExist = os.ErrNotExist
 
 type Context struct {
 	Cue *cue.Context
@@ -30,9 +34,12 @@ func NewContext() Context {
 }
 
 func (ctx *Context) Load(dir string) ([]Resource, error) {
-	var config cue.Value
+	_, err := os.ReadDir(dir)
+	if err != nil {
+		return nil, err //nolint:wrapcheck
+	}
 
-	insts := load.Instances([]string{"."}, &load.Config{
+	insts := load.Instances(nil, &load.Config{
 		Dir: dir,
 	})
 	if len(insts) != 1 {
@@ -40,7 +47,7 @@ func (ctx *Context) Load(dir string) ([]Resource, error) {
 	}
 	inst := insts[0]
 
-	config = ctx.Cue.BuildInstance(inst)
+	config := ctx.Cue.BuildInstance(inst)
 	if err := config.Err(); err != nil {
 		return nil, fmt.Errorf("building config: %w", err)
 	}
