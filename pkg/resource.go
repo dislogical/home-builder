@@ -37,6 +37,7 @@ const (
 	StatusUpToDate ResourceStatus = iota
 	StatusMissing
 	StatusNeedsUpdate
+	StatusError
 	StatusUnknown
 )
 
@@ -48,6 +49,8 @@ func (rs ResourceStatus) String() string {
 		return "missing"
 	case StatusNeedsUpdate:
 		return "needs update"
+	case StatusError:
+		return "error"
 
 	case StatusUnknown:
 		fallthrough
